@@ -56,8 +56,8 @@ void writeCSV(const std::string& filename, const std::vector<std::vector<std::st
 }
 
 int main() {
-    std::string inputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/input.csv";
-    std::string outputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/output.csv";
+    std::string inputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/io/input.csv";
+    std::string outputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/io/output.csv";
 
     // Read the input CSV
     auto data = readCSV(inputFile);

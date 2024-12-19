@@ -9,8 +9,8 @@ using namespace std;
 int main() {
     const int rows = 72;
     const int cols = 48;
-    string inputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/rawCSV.csv";
-    string outputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/Converted.csv";
+    string inputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/io/rawCSV.csv";
+    string outputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/io/Converted.csv";
 
     vector<vector<double>> grid(rows, vector<double>(cols));
 
