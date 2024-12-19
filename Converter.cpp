@@ -7,21 +7,19 @@
 using namespace std;
 
 int main() {
-    const int rows = 72; // Number of rows in the input grid
-    const int cols = 48; // Number of columns in the input grid
-    string inputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/rawCSV.csv";    // Input file path
-    string outputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/Converted.csv";  // Output file path
+    const int rows = 72;
+    const int cols = 48;
+    string inputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/rawCSV.csv";
+    string outputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/Converted.csv";
 
-    vector<vector<double>> grid(rows, vector<double>(cols)); // 2D grid to store Z values
+    vector<vector<double>> grid(rows, vector<double>(cols));
 
-    // Open the input CSV file
     ifstream inFile(inputFile);
     if (!inFile.is_open()) {
         cerr << "Error: Could not open input file: " << inputFile << endl;
         return 1;
     }
 
-    // Read the CSV file line by line
     string line;
     int row = 0;
     while (getline(inFile, line) && row < rows) {
@@ -29,24 +27,21 @@ int main() {
         string value;
         int col = 0;
         while (getline(ss, value, ',') && col < cols) {
-            grid[row][col] = stod(value); // Convert string to double and store in grid
+            grid[row][col] = stod(value);
             ++col;
         }
         ++row;
     }
     inFile.close();
 
-    // Open the output CSV file
     ofstream outFile(outputFile);
     if (!outFile.is_open()) {
         cerr << "Error: Could not open output file: " << outputFile << endl;
         return 1;
     }
 
-    // Write the header to the output file
     outFile << "X,Y,Z\n";
 
-    // Write the grid data as X, Y, Z values
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             outFile << i << "," << j << "," << grid[i][j] << "\n";

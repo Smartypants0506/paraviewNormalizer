@@ -6,9 +6,9 @@
 
 using namespace std;
 
-const int TILE_ROWS = 18; // Rows per CSV tile
-const int TILE_COLS = 12; // Columns per CSV tile
-const int GRID_SIZE = 4;  // 4x4 grid of CSV files
+const int TILE_ROWS = 18;
+const int TILE_COLS = 12;
+const int GRID_SIZE = 4;
 
 vector<vector<string>> readCSV(const string& filename) {
     vector<vector<string>> data(TILE_ROWS, vector<string>(TILE_COLS));
@@ -59,14 +59,11 @@ void writeCSV(const string& filename, const vector<vector<string>>& data) {
 int main() {
     vector<vector<string>> mergedMap(GRID_SIZE * TILE_ROWS, vector<string>(GRID_SIZE * TILE_COLS));
 
-    // Iterate over the 4x4 grid of files
     for (int gridRow = 0; gridRow < GRID_SIZE; ++gridRow) {
         for (int gridCol = 0; gridCol < GRID_SIZE; ++gridCol) {
-            // Construct the filename (e.g., tile_0_0.csv, tile_0_1.csv, etc.)
             string filename = "C:/Users/banta/CLionProjects/paraviewNormalizer/PotentialSolutions/" + to_string(gridRow) + "_" + to_string(gridCol) + ".csv";
             vector<vector<string>> tileData = readCSV(filename);
 
-            // Copy tile data to the appropriate position in the merged map
             for (int i = 0; i < TILE_ROWS; ++i) {
                 for (int j = 0; j < TILE_COLS; ++j) {
                     mergedMap[gridRow * TILE_ROWS + i][gridCol * TILE_COLS + j] = tileData[i][j];
@@ -75,7 +72,6 @@ int main() {
         }
     }
 
-    // Write the merged map to output.csv
     writeCSV("C:/Users/banta/CLionProjects/paraviewNormalizer/PotentialSolutions/final1", mergedMap);
     return 0;
 }
