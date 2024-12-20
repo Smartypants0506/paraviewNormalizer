@@ -72,6 +72,6 @@ int main() {
         }
     }
 
-    writeCSV("C:/Users/banta/CLionProjects/paraviewNormalizer/PotentialSolutions/final1", mergedMap);
+    writeCSV("C:/Users/banta/CLionProjects/paraviewNormalizer/PotentialSolutions/final2", mergedMap);
     return 0;
 }
