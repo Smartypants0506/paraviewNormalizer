@@ -19,7 +19,6 @@ void flipCSV(const std::string& inputFile, const std::string& outputFile) {
     std::vector<std::vector<std::string>> data;
     std::string line, cell;
 
-    // Read the CSV and store the data
     while (std::getline(inFile, line)) {
         std::istringstream lineStream(line);
         std::vector<std::string> row;
@@ -29,7 +28,6 @@ void flipCSV(const std::string& inputFile, const std::string& outputFile) {
         data.push_back(row);
     }
 
-    // Flip the data around the x-axis
     for (int i = data.size() - 1; i >= 0; --i) {
         for (int j = 0; j < data[i].size(); ++j) {
             outFile << data[i][j];

@@ -4,7 +4,6 @@
 #include <sstream>
 #include <string>
 
-// Function to read a CSV file into a 2D vector
 std::vector<std::vector<std::string>> readCSV(const std::string& filename) {
     std::vector<std::vector<std::string>> data;
     std::ifstream file(filename);
@@ -25,7 +24,6 @@ std::vector<std::vector<std::string>> readCSV(const std::string& filename) {
     return data;
 }
 
-// Function to rotate a 2D vector 90 degrees counterclockwise
 std::vector<std::vector<std::string>> rotateCounterclockwise(const std::vector<std::vector<std::string>>& data) {
     size_t rows = data.size();
     size_t cols = data[0].size();
@@ -40,7 +38,6 @@ std::vector<std::vector<std::string>> rotateCounterclockwise(const std::vector<s
     return rotated;
 }
 
-// Function to write a 2D vector to a CSV file
 void writeCSV(const std::string& filename, const std::vector<std::vector<std::string>>& data) {
     std::ofstream file(filename);
 
@@ -59,19 +56,15 @@ int main() {
     std::string inputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/io/input.csv";
     std::string outputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/io/output.csv";
 
-    // Read the input CSV
     auto data = readCSV(inputFile);
 
-    // Ensure the input is 12x18
     if (data.size() != 12 || data[0].size() != 18) {
         std::cerr << "Error: Input CSV must be a 12x18 grid." << std::endl;
         return 1;
     }
 
-    // Rotate the data counterclockwise
     auto rotatedData = rotateCounterclockwise(data);
 
-    // Write the rotated data to the output CSV
     writeCSV(outputFile, rotatedData);
 
     std::cout << "Rotation complete. Output written to " << outputFile << std::endl;

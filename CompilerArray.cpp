@@ -10,14 +10,14 @@ void mergeCSVGrid(
     int rowsPerFile,
     int colsPerFile
 ) {
-    int totalRows = rowsPerFile * fileGrid.size(); // Total rows in the final CSV
-    int totalCols = colsPerFile * fileGrid[0].size(); // Total columns in the final CSV
+    int totalRows = rowsPerFile * fileGrid.size();
+    int totalCols = colsPerFile * fileGrid[0].size();
 
-    // Create a 2D grid to store the merged data
+
     std::vector<std::vector<std::string>> mergedData(totalRows, std::vector<std::string>(totalCols));
 
-    for (size_t rowIndex = 0; rowIndex < fileGrid.size(); ++rowIndex) { // Iterate over grid rows
-        for (size_t colIndex = 0; colIndex < fileGrid[rowIndex].size(); ++colIndex) { // Iterate over grid cols
+    for (size_t rowIndex = 0; rowIndex < fileGrid.size(); ++rowIndex) {
+        for (size_t colIndex = 0; colIndex < fileGrid[rowIndex].size(); ++colIndex) {
             const std::string& fileName = fileGrid[rowIndex][colIndex];
             std::ifstream inputFile(fileName);
 
@@ -27,13 +27,12 @@ void mergeCSVGrid(
             }
 
             std::string line;
-            int localRow = 0; // Row index within the current file
+            int localRow = 0;
             while (std::getline(inputFile, line) && localRow < rowsPerFile) {
                 std::stringstream ss(line);
                 std::string value;
-                int localCol = 0; // Column index within the current file
+                int localCol = 0;
                 while (std::getline(ss, value, ',') && localCol < colsPerFile) {
-                    // Calculate global row and column indices
                     int globalRow = rowIndex * rowsPerFile + localRow;
                     int globalCol = colIndex * colsPerFile + localCol;
                     mergedData[globalRow][globalCol] = value;
@@ -46,7 +45,7 @@ void mergeCSVGrid(
         }
     }
 
-    // Write the merged data to the output file
+
     std::ofstream outputFile(outputFileName);
     if (!outputFile.is_open()) {
         std::cerr << "Error: Unable to create output file: " << outputFileName << std::endl;
@@ -68,7 +67,6 @@ void mergeCSVGrid(
 }
 
 int main() {
-    // Example grid of file names (2x4 grid)
     std::vector<std::vector<std::string>> fileGrid = {
         {"C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/7.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/10.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/12.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/14.csv"},
         {"C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/9.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/5.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/11.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/4.csv"},
@@ -78,7 +76,6 @@ int main() {
 
     std::string outputFileName = "C:/Users/banta/CLionProjects/paraviewNormalizer/PotentialSolutions/4x4.csv";
 
-    // Dimensions of each CSV file
     int rowsPerFile = 18;
     int colsPerFile = 12;
 

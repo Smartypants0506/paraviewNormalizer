@@ -51,7 +51,6 @@ public:
         }
         file.close();
 
-        // Extract edges
         NorthEdge = grid[0];
         SouthEdge = grid[17];
 
