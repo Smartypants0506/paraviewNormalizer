@@ -71,7 +71,7 @@ int main() {
         {"C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/7.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/10.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/12.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/14.csv"},
         {"C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/9.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/5.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/11.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/4.csv"},
         {"C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/13.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/6.csv","C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/3.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/8.csv"},
-        {"C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/1.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/2.csv","C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/16.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/15.csv"}
+        {"C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/16.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/2.csv","C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/1.csv", "C:/Users/banta/CLionProjects/paraviewNormalizer/tiles/15.csv"}
     };
 
     std::string outputFileName = "C:/Users/banta/CLionProjects/paraviewNormalizer/PotentialSolutions/4x4.csv";
