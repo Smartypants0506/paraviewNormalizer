@@ -9,4 +9,5 @@ add_executable(paraviewNormalizer rotate.cpp
         SimilarSides.cpp
         CompiledGrid.cpp
         Converter.cpp
+        DisplayPixels.cpp
 )
