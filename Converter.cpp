@@ -7,10 +7,10 @@
 using namespace std;
 
 int main() {
-    const int rows = 4*18;
-    const int cols = 4*12;
-    string inputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/PotentialSolutions/4x4.csv";
-    string outputFile = "C:/Users/banta/CLionProjects/paraviewNormalizer/io/Converted.csv";
+    const int rows = 8*18;
+    const int cols = 8*12;
+    string inputFile = "/home/trey1/CLionProjects/paraviewNormalizer/io/rawCSV.csv";
+    string outputFile = "/home/trey1/CLionProjects/paraviewNormalizer/io/Converted.csv";
 
     vector<vector<double>> grid(rows, vector<double>(cols));
 
