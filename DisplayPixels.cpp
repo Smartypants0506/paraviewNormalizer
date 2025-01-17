@@ -59,8 +59,8 @@ void saveAsTIFF(const std::string& filename, const std::vector<std::vector<uint8
 }
 
 int main() {
-    const std::string inputCSV = "uncAhhDirectory/Falcon5Scaled.csv"; // Replace with your input CSV file path
-    const std::string outputTIFF = "TIFF/Falcon5Scaled.tiff"; // Replace with your output TIFF file path
+    const std::string inputCSV = "uncAhhDirectory/Falcon2ScaledNoRotate.csv"; // Replace with your input CSV file path
+    const std::string outputTIFF = "TIFF/test.tiff"; // Replace with your output TIFF file path
 
     try {
         // Read the CSV file
