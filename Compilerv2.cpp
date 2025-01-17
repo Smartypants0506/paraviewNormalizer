@@ -38,9 +38,9 @@ void appendCSV(const std::string& file1, const std::string& file2, const std::st
 
 int main() {
     // File paths can be passed here
-    std::string file1 = "/home/trey1/CLionProjects/paraviewNormalizer/io/file1.csv"; // Replace with the path to your first CSV file
-    std::string file2 = "/home/trey1/CLionProjects/paraviewNormalizer/io/file2.csv"; // Replace with the path to your single-column file
-    std::string outputFile = "/home/trey1/CLionProjects/paraviewNormalizer/io/output.csv";   // Replace with the desired output file path
+    std::string file1 = "uncAhhDirectory/master.csv"; // Replace with the path to your first CSV file
+    std::string file2 = "uncAhhDirectory/Column5.csv"; // Replace with the path to your single-column file
+    std::string outputFile = "uncAhhDirectory/master5.csv";   // Replace with the desired output file path
 
     appendCSV(file1, file2, outputFile);
 

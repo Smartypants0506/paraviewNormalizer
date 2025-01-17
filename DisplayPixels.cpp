@@ -1,67 +1,86 @@
 #include <iostream>
 #include <fstream>
-#include <opencv2/opencv.hpp>
+#include <sstream>
+#include <vector>
+#include <string>
+#include <tiffio.h>
 
-using namespace std;
-using namespace cv;
+// Function to read the CSV file and return a 2D vector of grayscale values
+std::vector<std::vector<uint8_t>> readCSV(const std::string& filename) {
+    std::vector<std::vector<uint8_t>> data;
+    std::ifstream file(filename);
 
-// Function to load RGB values from a file into a matrix
-bool loadValues(const string &filename, Mat &channel) {
-    ifstream file(filename);
     if (!file.is_open()) {
-        cerr << "Error: Could not open file " << filename << endl;
-        return false;
+        throw std::runtime_error("Unable to open CSV file");
     }
 
-    for (int i = 0; i < channel.rows; ++i) {
-        for (int j = 0; j < channel.cols; ++j) {
-            int value;
-            file >> value;
-            if (file.fail()) {
-                cerr << "Error: Invalid data in file " << filename << endl;
-                return false;
-            }
-            channel.at<uchar>(i, j) = static_cast<uchar>(value);
+    std::string line;
+    while (std::getline(file, line)) {
+        std::vector<uint8_t> row;
+        std::stringstream ss(line);
+        std::string value;
+
+        while (std::getline(ss, value, ',')) {
+            row.push_back(static_cast<uint8_t>(std::stoi(value)));
         }
+        data.push_back(row);
     }
 
     file.close();
-    return true;
+    return data;
+}
+
+// Function to save the 2D vector as a greyscale TIFF file
+void saveAsTIFF(const std::string& filename, const std::vector<std::vector<uint8_t>>& data) {
+    const size_t height = data.size();
+    const size_t width = data[0].size();
+
+    TIFF* tiff = TIFFOpen(filename.c_str(), "w");
+    if (!tiff) {
+        throw std::runtime_error("Unable to open TIFF file for writing");
+    }
+
+    TIFFSetField(tiff, TIFFTAG_IMAGEWIDTH, static_cast<uint32_t>(width));
+    TIFFSetField(tiff, TIFFTAG_IMAGELENGTH, static_cast<uint32_t>(height));
+    TIFFSetField(tiff, TIFFTAG_SAMPLESPERPIXEL, 1);
+    TIFFSetField(tiff, TIFFTAG_BITSPERSAMPLE, 8);
+    TIFFSetField(tiff, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
+    TIFFSetField(tiff, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+    TIFFSetField(tiff, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_MINISBLACK);
+
+    for (size_t row = 0; row < height; ++row) {
+        if (TIFFWriteScanline(tiff, const_cast<uint8_t*>(data[row].data()), static_cast<uint32_t>(row), 0) == -1) {
+            TIFFClose(tiff);
+            throw std::runtime_error("Error writing scanline to TIFF file");
+        }
+    }
+
+    TIFFClose(tiff);
 }
 
 int main() {
-    const int width = 145;
-    const int height = 96;
-    const int scaleFactor = 10; // Change this value to scale the image
+    const std::string inputCSV = "uncAhhDirectory/Falcon5Scaled.csv"; // Replace with your input CSV file path
+    const std::string outputTIFF = "TIFF/Falcon5Scaled.tiff"; // Replace with your output TIFF file path
 
-    // Create matrices for each channel
-    Mat redChannel(height, width, CV_8UC1);
-    Mat greenChannel(height, width, CV_8UC1);
-    Mat blueChannel(height, width, CV_8UC1);
+    try {
+        // Read the CSV file
+        auto data = readCSV(inputCSV);
 
-    // Load values from the files
-    if (!loadValues("/home/trey1/Downloads/RGB0.txt", redChannel) ||
-        !loadValues("/home/trey1/Downloads/RGB3.txt", greenChannel) ||
-        !loadValues("/home/trey1/Downloads/RGB0.txt", blueChannel)) {
-        return 1;
+        // Ensure all rows have the same width
+        size_t width = data[0].size();
+        for (const auto& row : data) {
+            if (row.size() != width) {
+                throw std::runtime_error("Inconsistent row sizes in CSV file");
+            }
         }
 
-    // Merge channels into a single image
-    vector<Mat> channels = {blueChannel, greenChannel, redChannel};
-    Mat image;
-    merge(channels, image);
-
-    // Scale up the image
-    Mat scaledImage;
-    resize(image, scaledImage, Size(image.cols * scaleFactor, image.rows * scaleFactor), 0, 0, INTER_NEAREST);
-
-    // Display the image
-    namedWindow("RGB Image", WINDOW_AUTOSIZE);
-    imshow("RGB Image", scaledImage);
-
-    // Wait for a key press and then close
-    waitKey(0);
+        // Save as TIFF file
+        saveAsTIFF(outputTIFF, data);
+        std::cout << "TIFF file saved successfully: " << outputTIFF << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    }
 
     return 0;
 }
-

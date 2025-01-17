@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <cmath>
 
 using namespace std;
 
@@ -41,7 +42,6 @@ Grid readCSV(const string& filename) {
     return grid;
 }
 
-
 // Helper function to write grid to CSV file
 void writeCSV(const string& filename, const Grid& grid) {
     ofstream file(filename);
@@ -79,14 +79,55 @@ Grid translateAndScale(const Grid& grid, double scaleX, double scaleY, int trans
     return transformedGrid;
 }
 
+// Function to rotate the grid by an arbitrary angle
+Grid rotateGrid(const Grid& grid, double angle) {
+    int rows = grid.size();
+    int cols = grid[0].size();
+    double radians = angle * M_PI / 180.0;
+    double cosAngle = cos(radians);
+    double sinAngle = sin(radians);
+
+    // Calculate the dimensions of the new grid
+    int newRows = static_cast<int>(abs(rows * cosAngle) + abs(cols * sinAngle));
+    int newCols = static_cast<int>(abs(rows * sinAngle) + abs(cols * cosAngle));
+    Grid rotatedGrid(newRows, vector<double>(newCols, 255.0));
+
+    // Center coordinates for rotation
+    int centerX = rows / 2;
+    int centerY = cols / 2;
+    int newCenterX = newRows / 2;
+    int newCenterY = newCols / 2;
+
+    // Perform rotation
+    for (int r = 0; r < rows; ++r) {
+        for (int c = 0; c < cols; ++c) {
+            int x = r - centerX;
+            int y = c - centerY;
+
+            int newX = static_cast<int>(x * cosAngle - y * sinAngle + newCenterX);
+            int newY = static_cast<int>(x * sinAngle + y * cosAngle + newCenterY);
+
+            if (newX >= 0 && newX < newRows && newY >= 0 && newY < newCols) {
+                rotatedGrid[newX][newY] = grid[r][c];
+            }
+        }
+    }
+
+    return rotatedGrid;
+}
+
 int main() {
-    string inputFilename = "uncAhhDirectory/Falcon4.csv", outputFilename = "uncAhhDirectory/Falcon4Scaled.csv";
-    double scaleX = 0, scaleY = 0;
-    int translateX = 5, translateY = -5;
+    string inputFilename = "uncAhhDirectory/Falcon5.csv", outputFilename = "uncAhhDirectory/Falcon5Scaled.csv";
+    double scaleX = 1, scaleY = 1;
+    int translateX = 0, translateY = 0;
+    double rotationAngle = 0; // Rotation angle in degrees (increments of 5)
 
     // Process the CSV file
     Grid grid = readCSV(inputFilename);
+
+    // Apply transformations
     Grid transformedGrid = translateAndScale(grid, scaleX, scaleY, translateX, translateY);
+    transformedGrid = rotateGrid(transformedGrid, rotationAngle);
 
     // Write the transformed grid to the output file
     writeCSV(outputFilename, transformedGrid);

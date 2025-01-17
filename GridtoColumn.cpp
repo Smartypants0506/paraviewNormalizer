@@ -8,7 +8,7 @@ int main() {
     const int cols = 96;
 
     // Input file (replace "input.csv" with your actual file path)
-    std::ifstream inputFile("/home/trey1/CLionProjects/paraviewNormalizer/io/input.csv");
+    std::ifstream inputFile("uncAhhDirectory/Falcon5Scaled.csv");
 
     if (!inputFile.is_open()) {
         std::cerr << "Error: Could not open input file.\n";
@@ -33,7 +33,7 @@ int main() {
     inputFile.close();
 
     // Output file (replace "output.csv" with your desired file path)
-    std::ofstream outputFile("/home/trey1/CLionProjects/paraviewNormalizer/io/output.csv");
+    std::ofstream outputFile("uncAhhDirectory/Column5.csv");
 
     if (!outputFile.is_open()) {
         std::cerr << "Error: Could not open output file.\n";
